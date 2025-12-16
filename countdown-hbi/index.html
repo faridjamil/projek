@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Countdown Islami</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="w3.css">
+  <link rel="shortcut icon" href="moon.ico" />
+  <style>
+    body, h1 {
+      font-family: "Century Gothic", sans-serif;
+      color:#fff;
+    }
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    .bgimg {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('masjid.jpg');
+      min-height: 100%;
+      background-position: center;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    #demo {
+      font-family: "Century Gothic", sans-serif;
+      font-size: 48px;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+    .countdown-container {
+      color:#fff;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <audio autoplay="autoplay" loop="loop" name="media">
+    <source src="isra.mp3" type="audio/mpeg">
+  </audio>
+  <div class="bgimg">
+    <div class="countdown-container w3-animate-opacity">
+      <h1 class="w3-center">Countdown Islami</h1>
+      <h2 class="w3-center">Isra' Miraj' Nabi Muhammad SAW</h2>
+      <hr class="w3-border-grey" style="margin:auto;width:40%">
+      <h3 class="w3-center" id="demo"></h3>
+      <p class="w3-center">Jumat, 16 Januari 2026 M<br>Jum'at, 27 Rajab 1446 H</p>
+    </div>
+    <div class="w3-display-bottomleft w3-padding-large">
+      Copyright Farid Jamil Official 2023 | Powered by <a href="" target="_blank">w3.css</a>
+    </div>
+  </div>
+  <script>
+    // Mengatur waktu akhir perhitungan mundur
+    var countDownDate = new Date("January 16, 2026 14:00:00").getTime();
+    
+    // Memperbarui hitungan mundur setiap 1 detik
+    var x = setInterval(function() {
+      // Untuk mendapatkan tanggal dan waktu hari ini
+      var now = new Date().getTime();
+      
+      // Temukan jarak antara sekarang dan tanggal hitung mundur
+      var distance = countDownDate - now;
+      
+      // Perhitungan waktu untuk hari, jam, menit dan detik
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      
+      // Keluarkan hasil dalam elemen dengan id = "demo"
+      document.getElementById("demo").innerHTML = days + " HARI " + hours + " JAM " + minutes + " MENIT " + seconds + " DETIK ";
+      
+      // Jika hitungan mundur selesai, tulis beberapa teks
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("demo").innerHTML = "EXPIRED";
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
