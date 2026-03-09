@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farid Jamil Islam Super App</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS STYLES --- */
+        :root {
+            --primary-green: #064e3b;
+            --accent-green: #10b981;
+            --bg-body: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --grad-header: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #020617;
+            --card-bg: #1e293b;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --grad-header: linear-gradient(135deg, #022c22 0%, #064e3b 100%);
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, sans-serif;
+            margin: 0;
+            padding-bottom: 100px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .app-header {
+            background: var(--grad-header);
+            color: white;
+            padding: 30px 20px 45px;
+            border-bottom-left-radius: 35px;
+            border-bottom-right-radius: 35px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .profile-info { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .avatar-img { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--accent-green); object-fit: cover; }
+
+        .search-bar {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .search-bar input { background: transparent; border: none; color: white; width: 100%; outline: none; }
+        .search-bar input::placeholder { color: rgba(255,255,255,0.7); }
+
+        .main-content { padding: 0 15px; margin-top: -25px; }
+        .section-title { font-size: 0.85rem; font-weight: 800; margin: 25px 0 12px 5px; color: var(--text-main); text-transform: uppercase; letter-spacing: 1px; }
+
+        .grid-menu { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+
+        .menu-item {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 15px 5px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: 0.2s;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+        .menu-item:active { transform: scale(0.9); }
+        .menu-item .icon { font-size: 1.6rem; display: block; margin-bottom: 8px; }
+        .menu-item p { font-size: 0.65rem; font-weight: 700; margin: 0; color: var(--text-main); line-height: 1.2; }
+
+        /* Widget Jam */
+        .widget-container {
+            padding: 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            background: var(--card-bg);
+            width: 90%;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+        .jam { font-size: 2.5rem; font-weight: bold; color: var(--text-main); margin-bottom: 0.5rem; }
+        .masehi { font-size: 0.9rem; color: var(--text-main); font-weight: 600; margin-bottom: 5px; }
+        .hijriyah { font-size: 1rem; color: #d35400; font-weight: 500; background: rgba(211, 84, 0, 0.1); padding: 5px 15px; border-radius: 50px; display: inline-block; }
+        .lokasi { margin-top: 15px; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-body); z-index: 9999; display: none;
+            overflow-y: auto; animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal-header { padding: 20px; background: var(--grad-header); color: white; display: flex; justify-content: space-between; align-items: center; }
+        .close-btn { background:none; border:1px solid #fff; color:white; border-radius:10px; padding:5px 15px; cursor:pointer; }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            position: fixed; bottom: 15px; left: 15px; right: 15px;
+            background: var(--card-bg); height: 70px; border-radius: 25px;
+            display: flex; justify-content: space-around; align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+        .nav-btn { text-align: center; color: var(--text-muted); font-size: 0.7rem; cursor: pointer; }
+        .nav-btn.active { color: var(--accent-green); font-weight: bold; }
+        .nav-btn .nav-icon { font-size: 1.4rem; display: block; margin-bottom: 2px; }
+    </style>
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="profile-info">
+            <img class="avatar-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiAj6xStT0qothVnLB6s0gpN7MYOkhSefPJDJduXfWS345CUFfTq19mGCv40wH81oKuqSkCw4T_lUUSORJ96qyrN5yS2rUbj0NUua1q0SqvhuuFVDqHWwWnKCFbv0plSIdhKvtihcKMh_LnDSfZNGuH8eyGQhxbqoBn6nl4suJ80Vp4_hjdYTYlLs4tU54/s320/8e3c55f4-54d7-4302-a778-5af1afc80c25%20(1).jpg" alt="Profile">
+            <div>
+                <p style="margin:0; font-size:0.8rem; opacity:0.8;">Ahlan wa Sahlan,</p>
+                <h2 style="margin:0; font-size:1.1rem;">Farid Jamil Islam 🟢</h2>
+            </div>
+        </div>
+        <div class="search-bar">
+            <span>🔍 </span>
+            <input placeholder="Cari panduan ibadah..." type="text">
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <div class="widget-container">
+                <div class="jam" id="display-jam">00:00:00</div>
+                <div class="masehi" id="display-masehi">Memuat Tanggal...</div>
+                <div class="hijriyah" id="display-hijriyah">Memuat Hijriyah...</div>
+                <div class="lokasi">📍 Aikmel, Lombok Timur (WITA)</div>
+            </div>
+        </div>
+        
+        <div class="section-title">Ibadah & Panduan</div>
+        <div class="grid-menu">
+            <div class="menu-item" onclick="openFeature('Al-Quran')"><span class="icon">📖</span><p>Al-Quran</p></div>
+            <div class="menu-item" onclick="openFeature('Tajwid')"><span class="icon">💎</span><p>Tajwid</p></div>
+            <div class="menu-item" onclick="openFeature('Panduan Islam')"><span class="icon">🕌</span><p>Islam</p></div>
+            <div class="menu-item" onclick="openFeature('Panduan Ibadah')"><span class="icon">🧎</span><p>Ibadah</p></div>
+            <div class="menu-item" onclick="openFeature('Jadwal Imsakiyah')"><span class="icon">⌛</span><p>Imsakiyah</p></div>
+            <div class="menu-item" onclick="openFeature('Jadwal Ibadah')"><span class="icon">🕋</span><p>Waktu</p></div>
+            <div class="menu-item" onclick="openFeature('Awal Hijriyah')"><span class="icon">🌙</span><p>Hijriyah</p></div>
+            <div class="menu-item" onclick="openFeature('Awal Ramadhan & Syawwal')"><span class="icon">🔭</span><p>Hilal</p></div>
+        </div>
+
+        <div class="section-title">Zikir & Wirid</div>
+        <div class="grid-menu">
+            <div class="menu-item" onclick="openFeature('Zikir Az-Zikra Mingguan')"><span class="icon">🗓️</span><p>Mingguan</p></div>
+            <div class="menu-item" onclick="openFeature('Zikir Umum Harian')"><span class="icon">📿</span><p>Harian</p></div>
+            <div class="menu-item" onclick="openFeature('Zikir Sahirudin Jamil Tahunan')"><span class="icon">📜</span><p>Tahunan</p></div>
+            <div class="menu-item" onclick="openFeature('Ziarah Kubur')"><span class="icon">🌙</span><p>Ziarah</p></div>
+        </div>
+
+        <div class="section-title">Data & Media</div>
+        <div class="grid-menu">
+            <div class="menu-item" onclick="openFeature('Data Puasa Ramadhan')"><span class="icon">📊</span><p>Puasa</p></div>
+            <div class="menu-item" onclick="openFeature('Data Ibadah Terawih')"><span class="icon">🕌</span><p>Terawih</p></div>
+            <div class="menu-item" onclick="openFeature('Data Kunjungan Idul Fitri')"><span class="icon">🤝</span><p>Kunjungan</p></div>
+            <div class="menu-item" onclick="openFeature('Video')"><span class="icon">📹</span><p>Video</p></div>
+            <div class="menu-item" onclick="openFeature('Lagu')"><span class="icon">🎵</span><p>Lagu</p></div>
+            <div class="menu-item" onclick="openFeature('Download')"><span class="icon">📥</span><p>Unduh</p></div>
+            <div class="menu-item" onclick="openFeature('Informasi')"><span class="icon">ℹ️</span><p>Info</p></div>
+            <div class="menu-item" onclick="openFeature('Aplikasi Lainnya')"><span class="icon">📱</span><p>App Lain</p></div>
+        </div>
+    </main>
+
+    <nav class="bottom-nav">
+        <div class="nav-btn active"><span class="nav-icon">🏠</span>Beranda</div>
+        <div class="nav-btn" onclick="openFeature('Jadwal Ibadah')"><span class="nav-icon">📅</span>Jadwal</div>
+        <div class="nav-btn" onclick="toggleDark()"><span class="nav-icon" id="theme-icon">🌙</span>Mode</div>
+        <div class="nav-btn"><span class="nav-icon">👤</span>Profil</div>
+    </nav>
+
+    <div class="modal-overlay" id="appModal">
+        <div class="modal-header">
+            <h3 id="modalTitle" style="margin:0; font-size:1.1rem;">Detail Fitur</h3>
+            <button onclick="closeModal()" class="close-btn">Tutup</button>
+        </div>
+        <div id="modalBody" style="padding:20px;"></div>
+    </div>
+
+    <script>
+        function openFeature(name) {
+            const modal = document.getElementById('appModal');
+            const title = document.getElementById('modalTitle');
+            const body = document.getElementById('modalBody');
+            
+            modal.style.display = 'block';
+            title.innerText = name;
+
+            if (name === 'Jadwal Imsakiyah') {
+                const linkPDF = "https://drive.google.com/file/d/14YDHF2V9OAFm4NVe9JXytKyvmWNu8HD0/view?usp=drive_link"; 
+                body.innerHTML = `
+                    <div style="text-align:center; padding:10px;">
+                        <div style="font-size:4rem; margin-bottom:15px;">⏳</div>
+                        <h4 style="color:var(--text-main); margin-bottom:10px;">Jadwal Imsakiyah Ramadan 1447 H</h4>
+                        <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:25px;">
+                            Dapatkan jadwal lengkap waktu imsak dan buka puasa untuk wilayah Kecamatan Aikmel dan sekitarnya.
+                        </p>
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgikflzXgUbBHlzNYbi0VuocgA0ebuv6QBXRlPB_Wn2VBYDcdsEBRASU790pf3h21iZl44fG4t0v4zlj8wQmqYObRSKrItnNguT8CCPHm4_mwoF46FLbGaOvUmZaS-ZbV2Tvencvta-qlgcSUgf5Iv9G-2bXp-079TQDnpVPRcQRg8ruvOl4i2xLDD7upo/s16000/Biru%20dan%20Krem%20Modern%20Jadwal%20Imsakiyah%20Poster%20(1).png" width="100%" style="border-radius:10px; margin-bottom:15px;"/>
+                        
+                        <a href="${linkPDF}" target="_blank" style="display:flex; align-items:center; justify-content:center; gap:10px; background:#e11d48; color:white; text-decoration:none; padding:15px; border-radius:15px; font-weight:bold; margin-bottom:15px; box-shadow:0 4px 12px rgba(225,29,72,0.3);">
+                            <span>📄</span> Unduh Jadwal (PDF)
+                        </a>
+                    </div>
+                `;
+            } 
+            else if (name === 'Aplikasi Lainnya') {
+                const urlNWDI = "https://nwdi-faridjamil.blogspot.com/"; 
+                body.innerHTML = `
+                    <div style="background:var(--card-bg); padding:20px; border-radius:20px; display:flex; align-items:center; gap:15px; box-shadow:0 5px 15px rgba(0,0,0,0.05); border:1px solid rgba(0,0,0,0.05);">
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjNiV24U3MSv_S31jYG7l1I2R6AvXdViAa7W9IFutmerJb_ic26oFvGWaFzd1x64eShjNsVZ07y4kTDLe9zyIPhpgNE8TP_p2mSw6HHyh3ZkTKdos4Ik6W6-5W4gPJ2mLJ_HguA1FLkM0jHrU2w6IaPSnNGZrmKr30GA6WFeo4Vh62R_vAtL__79xxaBWc/s320/Gambar_NWDI.jpg" width="50" style="border-radius:10px;"/>
+                        <div style="flex:1;">
+                            <h4 style="margin:0; color:var(--text-main);">NWDI Super App</h4>
+                            <p style="margin:0; font-size:0.8rem; color:var(--text-muted);">Daiman Abada & Fastabiqul Khairat</p>
+                        </div>
+                        <a href="${urlNWDI}" target="_blank" style="background:var(--accent-green); color:white; text-decoration:none; padding:8px 15px; border-radius:12px; font-weight:bold; font-size:0.75rem;">BUKA</a>
+                    </div>
+                `;
+            } 
+            else {
+                body.innerHTML = `
+                    <div style="text-align:center; padding-top:50px;">
+                        <span style="font-size:3.5rem;">🏗️</span>
+                        <h4 style="color:var(--text-main);">Fitur ${name}</h4>
+                        <p style="color:var(--text-muted);">Assalamu'alaikum Farid, konten sedang disiapkan.</p>
+                    </div>`;
+            }
+        }
+
+        function closeModal() { 
+            document.getElementById('appModal').style.display = 'none'; 
+        }
+
+        function toggleDark() {
+            const htmlElement = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            if (htmlElement.getAttribute('data-theme') === 'dark') {
+                htmlElement.removeAttribute('data-theme');
+                icon.innerText = '🌙';
+            } else {
+                htmlElement.setAttribute('data-theme', 'dark');
+                icon.innerText = '☀️';
+            }
+        }
+
+        function updateClock() {
+            const sekarang = new Date();
+            const opsiJam = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+            document.getElementById('display-jam').innerText = sekarang.toLocaleTimeString('id-ID', opsiJam);
+            const opsiMasehi = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+            document.getElementById('display-masehi').innerText = sekarang.toLocaleDateString('id-ID', opsiMasehi);
+            const formatHijriyah = new Intl.DateTimeFormat('id-ID-u-ca-islamic-umalqura-nu-latn', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            }).format(sekarang);
+            document.getElementById('display-hijriyah').innerText = formatHijriyah;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
