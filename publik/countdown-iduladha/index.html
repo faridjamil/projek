@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Idul Adha | Modern & Kece</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: #0f2027; 
+            background: linear-gradient(135deg, #2c5364, #203a43, #0f2027);
+            color: white;
+        }
+
+        /* Background Ornament */
+        .background-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/islamic-art.png');
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 3rem;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 45px rgba(0,0,0,0.2);
+            max-width: 90%;
+        }
+
+        header h1 {
+            font-weight: 300;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+        }
+
+        header h1 span {
+            font-weight: 800;
+            font-size: 2.5rem;
+            color: #ffd700; /* Gold Modern */
+            display: block;
+        }
+
+        .logo-icon {
+            font-size: 3rem;
+            color: #ffd700;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+        }
+
+        /* Countdown Style */
+        .countdown-wrapper {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .time-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 20px;
+            min-width: 100px;
+            border-bottom: 4px solid #ffd700;
+            transition: transform 0.3s ease;
+        }
+
+        .time-box:hover {
+            transform: translateY(-10px);
+        }
+
+        .time-box span {
+            font-size: 2.5rem;
+            font-weight: 800;
+            display: block;
+        }
+
+        .time-box p {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+
+        footer {
+            margin-top: 2.5rem;
+        }
+
+        footer p {
+            font-size: 0.7rem;
+            opacity: 0.6;
+        }
+
+        .social-icons {
+            margin-top: 15px;
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .social-icons i:hover {
+            color: #ffd700;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            header h1 span { font-size: 1.8rem; }
+            .countdown-wrapper { gap: 10px; }
+            .time-box { min-width: 70px; padding: 15px; }
+            .time-box span { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-overlay"></div>
+
+    <div class="container">
+        <header>
+            <i class="fas fa-kaaba logo-icon"></i>
+            <h1>Menuju Hari Raya <br><span>Idul Adha 1447 H</span></h1>
+        </header>
+
+        <div class="countdown-wrapper">
+            <div class="time-box">
+                <span id="days">00</span>
+                <p>Hari</p>
+            </div>
+            <div class="time-box">
+                <span id="hours">00</span>
+                <p>Jam</p>
+            </div>
+            <div class="time-box">
+                <span id="minutes">00</span>
+                <p>Menit</p>
+            </div>
+            <div class="time-box">
+                <span id="seconds">00</span>
+                <p>Detik</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>Situs Estimasi Berdasarkan Kalender Astronomi</p>
+            <div class="social-icons">
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-youtube"></i>
+                <i class="fab fa-tiktok"></i>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Set Target Date (Estimasi Idul Adha 2026)
+        const countdownDate = new Date("May 27, 2026 00:00:00").getTime();
+
+        const updateCountdown = () => {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+
+            // Kalkulasi Waktu
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Update Tampilan
+            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+
+            // Jika waktu habis
+            if (distance < 0) {
+                clearInterval(timerInterval);
+                document.querySelector(".countdown-wrapper").innerHTML = "<h2>Selamat Hari Raya Idul Adha!</h2>";
+            }
+        };
+
+        // Jalankan setiap detik
+        const timerInterval = setInterval(updateCountdown, 1000);
+
+        // Panggil sekali di awal agar tidak menunggu 1 detik pertama
+        updateCountdown();
+    </script>
+</body>
+</html>
